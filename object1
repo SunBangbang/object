@@ -1,1 +1,55 @@
+//mysqli操作php
+ <?php 
+        /**
+         *1.链接MySQL服务器 
+         *参数1:mysql服务器的地址
+         *参数2:mysql用户名
+         *参数3:用户对应密码      
+         *返回值: 数据库链接资源
+         */
+        $conn = mysqli_connect('localhost', 'root', 'root');
+        // $conn= myaqli_connect('localhost','root','root');
 
+         /**
+          * 2选择要操作的数据库
+          *参数1: 数据库链接资源
+          *参数2: 数据库名称
+          */
+          mysqli_select_db($conn, 'study');
+        //mysqli_select_db($conn,'study');
+
+          /**
+           * 3设置字符集 （不设置字符集可能会出现乱码问题）
+           * 参数1: 数据库链接资源
+            *参数2: sql 语句 ----  set names utf8  (设置字符集的sql语句)
+           */
+          mysqli_query($conn, 'set names utf8');
+        //mysqli_query($conn,'set names utf8');
+
+           /**
+            * 4执行SQL语句
+             *参数1: 数据库链接资源
+            *参数2: sql 语句 
+            *返回值: 如果是查询，则返回结果对象，该对象里面包含了从数据表中取出的数据
+            *如果是增删改，则返回布尔值，执行成功返回true，失败返回false
+            */
+            $sql = 'select * from ali_admin';
+            $result = mysqli_query($conn, $sql);
+
+            /**
+             * 5处理SQL执行结果
+             * 参数: 查询结果对象
+             *返回值: 一维数组，下标是数据表字段
+             *将当前行的数据取出并返回成一维数组，同时将指针向下移动一行。
+             *如果已经无法返回一维数组时，则返回false 
+             */
+            while($row = mysqli_fetch_assoc($result)){
+                print_r($row);
+            }
+
+             /**
+              * 6关闭MySQL链接资源 --- mysqli_close(var)
+               *参数: 数据库链接资源
+              */
+              mysqli_close($conn)
+    ?>
